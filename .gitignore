@@ -1,0 +1,5 @@
+dea/*
+.DS_Store
+*.iml
+node_modules/*
+npm-debug.log
