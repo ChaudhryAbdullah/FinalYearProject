@@ -1,0 +1,12 @@
+-- show databases;
+-- create database Tourister;
+
+-- 	Create table Users(
+-- 				 UserID  INT NOT NULL AUTO_INCREMENT,
+--                  UserName varchar(100) NOT NULL,
+--                  UserPassword varchar(16),
+--                  UserEmail varchar(100),
+--                  SocialNetwork varchar(8),
+--                  SocialNetworkID long,
+--                  roleType char(16),
+--                  PRIMARY KEY(UserID));
