@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Tourister</title>
+    <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="/javascripts/thirdparty/jquery-2.1.1.js"></script>
+    <link href="stylesheets/login.css" rel="stylesheet">
+    <!--<script type="text/javascript">-->
+    <!--window.onload = function () {-->
+    <!--//            document.loginForm.action = window.location.origin + "/login";-->
+    <!--};-->
+    <!--</script>-->
+</head>
+<body class="hide">
+
+<!--<div id="fb-root"></div>-->
+<!--<script>(function(d, s, id) {-->
+<!--console.log("claled");-->
+<!--var js, fjs = d.getElementsByTagName(s)[0];-->
+<!--if (d.getElementById(id)) return;-->
+<!--js = d.createElement(s); js.id = id;-->
+<!--js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1592360074332925&version=v2.0";-->
+<!--fjs.parentNode.insertBefore(js, fjs);-->
+<!--}(document, 'script', 'facebook-jssdk'));</script>-->
+
+<div class="content">
+    <div>
+        <h2>Sign In</h2>
+        <form id="loginForm" method="post" name="loginForm" action="/login">
+            <div class="login">
+                <div class="form-field-cntr">
+                    <span>Username</span>
+                    <input name="username" type="text">
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="form-field-cntr">
+                    <span>Password</span><input name="password" type="password">
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="login-btn-cntr">
+                    <button type="submit">Submit</button>
+                </div>
+
+            </div>
+        </form>
+
+        <h2>Sign Up</h2>
+        <form id="signupForm" method="post" name="signupForm" action="/signup">
+            <div class="signup">
+                <!--<span class="msg">All fields are required</span>-->
+                <div class="form-field-cntr">
+                    <span>Your Good Name</span>
+                    <input name="name" type="text">
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="form-field-cntr">
+                    <span>Email</span>
+                    <input name="useremail" type="text">
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="form-field-cntr">
+                    <span>Password</span><input name="password" type="password">
+                    <div class="clearfix"></div>
+                </div>
+                <div class="login-btn-cntr">
+                    <button type="submit">Create Account</button>
+                </div>
+
+            </div>
+        </form>
+
+        <div class="alt-msg">
+            <h2>OR</h2>
+        </div>
+
+        <div class="fb-registeration">
+            <span class="fb-msg">Login With <a href="/auth/facebook">Facebook</a></span>
+
+            <!--<div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true"-->
+            <!--data-auto-logout-link="false"></div>-->
+        </div>
+    </div>
+</div>
+</body>
+</html>
