@@ -1,0 +1,115 @@
+@import "common.less";
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  background-color: #F0F0F0;
+}
+
+#logo{
+  color:@Blue;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: @FontFamily;
+}
+
+.user-detail{
+  display: inline-block;
+  //  margin:10px 0;
+  color:@Brown;
+  font-size:14px;
+  font-family: @FontFamily;
+}
+
+.navbar-header{
+  background-color: @BGColor;
+}
+
+.nav-holder{
+  border-bottom: 2px solid @Brown;
+}
+
+.log-out{
+  color:@Blue;
+  text-decoration: underline;
+  font-family: @FontFamily;
+}
+
+.index {
+  height: 100%;
+  position: relative;
+  background-color: #F0F0F0;
+
+  p{
+    color:#004687;
+    font-family: 'Raleway', sans-serif;
+  }
+
+  .intro{
+
+    margin-top: 15px;
+
+    p{
+      font-size: 16px;
+      text-align: justify;
+    }
+
+  }
+
+  >div{
+    max-height: 100%;
+    overflow: hidden;
+  }
+
+  .header {
+    text-align: center;
+    padding-top: 10em;
+    color:@Blue;
+    font-family: 'Raleway', sans-serif;
+  }
+
+  //  .stream {
+  //    border: 1px solid #000000;
+  //
+  //    .stream-entry{
+  //      min-height: 10em;
+  //      background-color: #f5f5f5;
+  //      margin: 0.5em 0;
+  //    }
+  //  }
+
+  .upsells {
+    .upsell {
+      padding: 4em 0;
+      float: left;
+      width: 33%;
+      text-align: center;
+      color:#B6B6B6;
+      color:@Brown;
+    }
+  }
+
+  .premium {
+    text-align: center;
+    font-size: 20px;
+    a {
+      text-transform: uppercase;
+      color:#B81D18;
+      color:@Brown;
+      text-decoration: underline;
+    }
+  }
+
+  .examples{
+    .example{
+      min-height: 500px;
+    }
+  }
+
+  .clearfix{
+    clear:both;
+  }
+}

@@ -15,7 +15,7 @@ function CreateSQLConnection() {
     user: process.env.OPENSHIFT_MYSQL_DB_USERNAME || 'root',
     port: 3306,
     password: process.env.OPENSHIFT_MYSQL_DB_PASSWORD || 'password',
-    database: process.env.OPENSHIFT_MYSQL_DB_HOST ? 'test' : 'GetInTech',
+    database: process.env.OPENSHIFT_MYSQL_DB_HOST ? 'test' : 'Tourister',
     multipleStatements: true
   });
 
@@ -27,9 +27,9 @@ function CreateSQLConnection() {
 var passport = require('passport');
 var facebookStrategy = require('passport-facebook').Strategy;
 passport.use(new facebookStrategy({
-    clientID: 1592360074332925,
-    clientSecret: 'f21bf762bd543a7e0c93e6aafe09045a',
-    callbackURL: "http://test-demogetintech.rhcloud.com/auth/facebook/callback"
+    clientID: change,
+    clientSecret: 'change',
+    callbackURL: "http://demo-tourister.rhcloud.com/auth/facebook/callback"
   },
   function (accessToken, refreshToken, profile, done) {
 
@@ -55,6 +55,7 @@ passport.use(new facebookStrategy({
       if (found) {
         console.log("user is found");
         userRecord = results[0][0][0];
+        conn.end();
         return done(null, userRecord);
       }
       else {
@@ -68,6 +69,7 @@ passport.use(new facebookStrategy({
         q.all([d2.promise]).then(function (results) {
           console.log("successfully added & results are : ");
           console.dir(results);
+          conn2.end();
           return done(null, {
             UserID: profile.id,
             UserName: profile.name,
