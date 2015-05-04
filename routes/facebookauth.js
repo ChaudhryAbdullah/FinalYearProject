@@ -27,8 +27,8 @@ function CreateSQLConnection() {
 var passport = require('passport');
 var facebookStrategy = require('passport-facebook').Strategy;
 passport.use(new facebookStrategy({
-    clientID: change,
-    clientSecret: 'change',
+    clientID: 860592120673310,
+    clientSecret: 'efa5e8f42d05e427bd59895ac98a8e8b',
     callbackURL: "http://demo-tourister.rhcloud.com/auth/facebook/callback"
   },
   function (accessToken, refreshToken, profile, done) {
