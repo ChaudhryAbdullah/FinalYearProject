@@ -149,17 +149,19 @@ function GetQuestion(res, qid) {
 }
 
 function RenderLandingPage(req, res) {
-
   var r = fs.readFileSync('views/index.mustache', {encoding: 'utf-8'}),
+    rightBar = fs.readFileSync('views/rightbar.mustache', {encoding: 'utf-8'}),
+    navbar = fs.readFileSync('views/navbar.mustache', {encoding: 'utf-8'}),
     head = fs.readFileSync('views/head.mustache', {encoding: 'utf-8'});
 
   r = mustache.to_html(r,
     {user: {
-      userName: 'Freeloader'
+      userName: req.user.UserName
     }},
     {
-      head: head
-
+      head: head,
+      navbar:navbar,
+      rightbar: rightBar
     });
 
   res.setHeader('content-type', 'text/html')
@@ -169,7 +171,7 @@ function RenderLandingPage(req, res) {
 }
 
 router.use(function (req, res, next) {
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated() || true) {
     next();
   }
   else {
@@ -185,34 +187,16 @@ router.get('/home', function (req, res) {
 
   var r = fs.readFileSync('views/home.mustache', {encoding: 'utf-8'}),
     p1 = fs.readFileSync('views/navbar.mustache', {encoding: 'utf-8'}),
-    p2 = fs.readFileSync('views/top.mustache', {encoding: 'utf-8'}),
     head = fs.readFileSync('views/head.mustache', {encoding: 'utf-8'}),
-    rightBar = fs.readFileSync('views/rightbar/rightbar.mustache', {encoding: 'utf-8'});
+    rightBar = fs.readFileSync('views/rightbar.mustache', {encoding: 'utf-8'});
 
-  var question = fs.readFileSync('views/article/question.mustache', {encoding: 'utf-8'}),
-    snippet = fs.readFileSync('views/article/snippet.mustache', {encoding: 'utf-8'}),
-    solution = fs.readFileSync('views/article/solution.mustache', {encoding: 'utf-8'}),
-    article = fs.readFileSync('views/article/article.mustache', {encoding: 'utf-8'}),
-    filters = fs.readFileSync('views/filters.mustache', {encoding: 'utf-8'}),
-    list = fs.readFileSync('views/list.mustache', {encoding: 'utf-8'});
-
-  var listTmp = mustache.to_html(list,
-    {},
-    {
-      article: article,
-      question: question,
-      solution: solution
-    });
 
   r = mustache.to_html(r,
     {user: {
-      userName: req.user.UserName
+      userName:  req.user.UserName
     }},
     {
       navbar: p1,
-      filters: filters,
-      list: listTmp,
-      snippet: snippet,
       head: head,
       rightbar: rightBar
     });

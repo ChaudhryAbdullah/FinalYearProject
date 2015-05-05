@@ -61,7 +61,7 @@ passport.use(new facebookStrategy({
       else {
         console.log("adding as a new user");
         conn2 = CreateSQLConnection();
-        q2 = "insert into Users (UserName, SocialNetworkID, SocialNetwork, roleType) VALUES('" + profile.displayName + "'," + profile.id + ",'FB','user')";
+        q2 = "insert into Users (UserName, SocialNetworkID, SocialNetwork, RoleType, LikedPlaces) VALUES('" + profile.displayName + "'," + profile.id + ",'FB','user','1,3,5')";
         d2 = q.defer();
         console.log(q2);
         conn2.query(q2, d2.makeNodeResolver());
