@@ -171,7 +171,7 @@ function RenderLandingPage(req, res) {
 }
 
 router.use(function (req, res, next) {
-  if (req.isAuthenticated() || true) {
+  if (req.isAuthenticated()) {
     next();
   }
   else {
