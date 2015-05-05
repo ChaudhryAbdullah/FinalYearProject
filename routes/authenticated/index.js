@@ -150,18 +150,14 @@ function GetQuestion(res, qid) {
 
 function RenderLandingPage(req, res) {
   var r = fs.readFileSync('views/index.mustache', {encoding: 'utf-8'}),
-    rightBar = fs.readFileSync('views/rightbar.mustache', {encoding: 'utf-8'}),
-    navbar = fs.readFileSync('views/navbar.mustache', {encoding: 'utf-8'}),
     head = fs.readFileSync('views/head.mustache', {encoding: 'utf-8'});
 
   r = mustache.to_html(r,
     {user: {
-      userName: req.user.UserName
+      userName: '' //req.user.UserName
     }},
     {
-      head: head,
-      navbar:navbar,
-      rightbar: rightBar
+      head: head
     });
 
   res.setHeader('content-type', 'text/html')
