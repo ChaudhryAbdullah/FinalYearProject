@@ -184,8 +184,8 @@ router.get('/home', function (req, res) {
   var r = fs.readFileSync('views/home.mustache', {encoding: 'utf-8'}),
     p1 = fs.readFileSync('views/navbar.mustache', {encoding: 'utf-8'}),
     head = fs.readFileSync('views/head.mustache', {encoding: 'utf-8'}),
-    rightBar = fs.readFileSync('views/rightbar.mustache', {encoding: 'utf-8'});
-
+    rightBar = fs.readFileSync('views/rightbar.mustache', {encoding: 'utf-8'}),
+    leftBar = fs.readFileSync('views/leftbar.mustache', {encoding: 'utf-8'});
 
   r = mustache.to_html(r,
     {user: {
@@ -194,7 +194,8 @@ router.get('/home', function (req, res) {
     {
       navbar: p1,
       head: head,
-      rightbar: rightBar
+      rightbar: rightBar,
+      leftbar: leftBar
     });
 
   res.setHeader('content-type', 'text/html')
