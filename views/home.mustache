@@ -4,19 +4,21 @@
 {{>navbar}}
 <div class="container-fluid">
     <div class="col-md-2">
-       {{>leftbar}}
-
+        {{>leftbar}}
     </div>
-    <div class="col-md-8">
-        News Feed should come here {{user.userName}}
+    <div class="col-md-8" style="position: relative">
+        <div>
+            {{>suggestedPlaces}}
+        </div>
+        <div class="content-cntr">
+            {{>addTripForm}}
+            {{>newsfeed}}
+        </div>
     </div>
     <div class="col-md-2">
         {{>rightbar}}
     </div>
 </div>
 </body>
-<!--<script id="snippetTmpl" type="text/mustache-template">-->
-        <!---->
-<!--</script>-->
 
 </html>

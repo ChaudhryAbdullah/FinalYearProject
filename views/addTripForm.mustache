@@ -1,0 +1,24 @@
+<!-- ko with:AddTripFormModel-->
+<div data-bind="css:{'hide' : !showForm()}" class="hide addTripForm">
+    <form>
+        <div class="clearfix">
+            <h3 class="pull-left">Add a Trip</h3>
+            <a class="pull-right" data-bind="click:onCancel">Cancel</a>
+        </div>
+
+        <div>
+            <label style="width: 20%; text-align: right">Place</label>
+            <input type="text" data-bind="value: name" style="width: 50%; text-align: left">
+        </div>
+
+        <div>
+            <label style="width: 20%; text-align: right">Description</label>
+            <input type="text" data-bind="value: description" style="width: 50%; height: 10em; text-align: left">
+        </div>
+
+        <label>Upload Photos</label>
+
+
+    </form>
+</div>
+<!-- /ko -->

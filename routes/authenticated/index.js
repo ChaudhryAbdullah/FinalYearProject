@@ -181,25 +181,31 @@ router.get('/', function (req, res) {
 
 router.get('/home', function (req, res) {
 
-  var r = fs.readFileSync('views/home.mustache', {encoding: 'utf-8'}),
-    p1 = fs.readFileSync('views/navbar.mustache', {encoding: 'utf-8'}),
+  var home = fs.readFileSync('views/home.mustache', {encoding: 'utf-8'}),
+    navBar = fs.readFileSync('views/navbar.mustache', {encoding: 'utf-8'}),
     head = fs.readFileSync('views/head.mustache', {encoding: 'utf-8'}),
     rightBar = fs.readFileSync('views/rightbar.mustache', {encoding: 'utf-8'}),
-    leftBar = fs.readFileSync('views/leftbar.mustache', {encoding: 'utf-8'});
+    leftBar = fs.readFileSync('views/leftbar.mustache', {encoding: 'utf-8'}),
+    newsfeed = fs.readFileSync('views/newsfeed.mustache', {encoding: 'utf-8'}),
+    suggestedPlaces = fs.readFileSync('views/suggestedPlaces.mustache', {encoding: 'utf-8'}),
+    addTripForm = fs.readFileSync('views/addTripForm.mustache', {encoding: 'utf-8'});
 
-  r = mustache.to_html(r,
+  home = mustache.to_html(home,
     {user: {
       userName:  req.user.UserName
     }},
     {
-      navbar: p1,
+      navbar: navBar,
       head: head,
+      addTripForm: addTripForm,
+      newsfeed: newsfeed,
+      suggestedPlaces: suggestedPlaces,
       rightbar: rightBar,
       leftbar: leftBar
     });
 
   res.setHeader('content-type', 'text/html')
-  res.write(r);
+  res.write(home);
   res.end();
 
 });

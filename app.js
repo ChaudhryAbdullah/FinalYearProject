@@ -11,7 +11,7 @@ var q = require("q");
 
 //var logout = require('./routes/logout');
 var login = require('./routes/login');
-//var signup = require('./routes/signup');
+var signup = require('./routes/signup');
 var fbAuth = require('./routes/facebookauth');
 var index = require('./routes/authenticated/index');
 
@@ -55,7 +55,7 @@ app.all("*", function (req, res, next) {
 
 app.use('/login', login);
 //app.use('/logout',logout);
-//app.use('/signup', signup);
+app.use('/signup', signup);
 app.use('/', index);
 
 

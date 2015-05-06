@@ -1,4 +1,12 @@
+<!-- ko with:LeftBarModel-->
 <div class="actions">
-    <span class="glyphicon glyphicon-plus"></span>
-    <span class="sr-only">Add a Trip</span>
+    <div class="add-action" data-bind="click:OnAddTrip">
+        <span class="glyphicon glyphicon-plus" style="cursor:pointer; font-size: 2em"></span>
+        <span class="">Add a Trip</span>
+    </div>
+    <div class="add-action" data-bind="click:OnAddEvent">
+        <span class="glyphicon glyphicon-plus" style="cursor:pointer; font-size: 2em"></span>
+        <span class="">Add an Event</span>
+    </div>
 </div>
+<!-- /ko -->
