@@ -6,13 +6,15 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
-
+var multer = require('multer');
 var q = require("q");
 
 //var logout = require('./routes/logout');
 var login = require('./routes/login');
+var logout = require('./routes/logout');
 var signup = require('./routes/signup');
 var fbAuth = require('./routes/facebookauth');
+var addTrip = require('./routes/authenticated/addTrip');
 var index = require('./routes/authenticated/index');
 
 var app = express();
@@ -36,6 +38,18 @@ app.use(cookieParser());
 
 app.use('/auth/facebook', fbAuth);
 
+app.use(multer({ dest: './uploads/',
+  rename: function (fieldname, filename) {
+    return filename + Date.now();
+  },
+  onFileUploadStart: function (file) {
+    console.log(file.originalname + ' is starting ...');
+  },
+  onFileUploadComplete: function (file) {
+    console.log(file.fieldname + ' uploaded to  ' + file.path);
+  }
+}));
+
 app.all("*", function (req, res, next) {
 
   if (req.isAuthenticated()
@@ -54,8 +68,9 @@ app.all("*", function (req, res, next) {
 });
 
 app.use('/login', login);
-//app.use('/logout',logout);
+app.use('/logout',logout);
 app.use('/signup', signup);
+app.use('/addTrip', addTrip);
 app.use('/', index);
 
 

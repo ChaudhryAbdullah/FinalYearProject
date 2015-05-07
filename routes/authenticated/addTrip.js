@@ -1,0 +1,268 @@
+var express = require('express');
+var fs = require('fs');
+var mustache = require('mustache');
+var router = express.Router();
+var mysql = require('mysql');
+var q = require("q");
+var constants = require('../../server/constants');
+var _ = require('underscore');
+
+
+function CreateSQLConnection() {
+  var connection = mysql.createConnection({
+    host: process.env.OPENSHIFT_MYSQL_DB_HOST || 'localhost',
+    user: process.env.OPENSHIFT_MYSQL_DB_USERNAME || 'root',
+    port: 3306,
+    password: process.env.OPENSHIFT_MYSQL_DB_PASSWORD || 'password',
+    database: process.env.OPENSHIFT_MYSQL_DB_HOST ? 'demo' : 'GetInTech',
+    multipleStatements: true
+  });
+
+  connection.connect();
+  return connection;
+}
+
+function GetSQL(tags, page, res, req) {
+  var response = {},
+    connection = CreateSQLConnection(),
+    i = 0,
+    query = 'SELECT QuestionID, QuestionMarkup, DifficultyRank, Tags, OneLiner FROM table1' + (req.user.status != 'admin' ? ' WHERE status="release"' : ''),
+    q2 = 'SELECT count(*) FROM table1' + (req.user.status != 'admin' ? ' WHERE status="release"' : '');
+
+  // Add filter by tags criteria
+  for (; i < tags.length; i++) {
+    if (i === 0) {
+      query += ' WHERE '
+      q2 += ' WHERE';
+    }
+    else {
+      query += ' OR ';
+      q2 += ' OR';
+    }
+
+    query += 'Tags LIKE ' + '\'%' + tags[i] + '%\'';
+    q2 += 'Tags LIKE ' + '\'%' + tags[i] + '%\'';
+  }
+
+  // Limit by the number of results shown per page
+  if (pageSize) {
+    query += " LIMIT " + pageSize * (page) + ", " + pageSize;
+  }
+
+  var d1 = q.defer(),
+    d2 = q.defer(),
+    q1 = connection.query(query, d1.makeNodeResolver()),
+    q2 = connection.query(q2, d2.makeNodeResolver());
+
+  q.all([d1.promise, d2.promise]).then(function (results) {
+    var rowsCopy = [],
+      rows = results[0][0];
+    i = 0;
+
+    //TODO: check if we need the rowscopy or not
+    console.log('rows count returned = ', rows.length);
+    for (; i < rows.length; i++) {
+      var item = {};
+      item.QuestionID = rows[i].QuestionID;
+      var markup = rows[i].QuestionMarkup;
+      item.QuestionMarkup = (new Buffer(markup)).toString('utf-8');
+      item.DifficultyRank = rows[i].DifficultyRank;
+      item.Tags = rows[i].Tags;
+      item.OneLiner = rows[i].OneLiner;
+
+      rowsCopy.push(item);
+    }
+
+    response.Questions = rowsCopy;
+    response.TotalResults = results[1][0][0]["count(*)"];
+    connection.end(function (err) {
+      if (err) {
+        console.error("connection terminated badly ");
+        console.dir(err);
+      }
+    });
+
+    console.log("sending to client list = " + JSON.stringify(response));
+    res.send(JSON.stringify(response));
+    res.end();
+  });
+}
+
+function GetQuestion(res, qid) {
+
+  var connection = CreateSQLConnection(),
+    query = "SELECT * FROM table1 WHERE QuestionID=" + qid + ";" +
+      "SELECT * FROM Illustrations WHERE QuestionID=" + qid + ";";
+
+  connection.query(query, function (err, rows, fields) {
+    if (err) {
+      throw err;
+    }
+
+    var question = rows[0][0],
+      illustrations = rows[1];
+
+    var item = {};
+    item.QuestionID = question.QuestionID;
+    var markup = question.QuestionMarkup;
+    item.QuestionMarkup = (new Buffer(markup)).toString('utf-8');
+
+    markup = question.SolutionMarkup;
+    item.SolutionMarkup = (new Buffer(markup)).toString('utf-8');
+
+    var missingCodeMessage = "<h3 style='width: 100%; text-align: center'>Ah, bummer ! we haven't been able to get to write out this code yet. </h3>";
+    item.JavascriptCode = missingCodeMessage;
+    item.CSharpCode = missingCodeMessage;
+    item.JavaCode = missingCodeMessage;
+
+    markup = question.JavascriptCode;
+    if (markup) {
+      item.JavascriptCode = (new Buffer(markup)).toString('utf-8');
+    }
+
+    markup = question.JavaCode;
+    if (markup) {
+      item.JavaCode = (new Buffer(markup)).toString('utf-8');
+      item.JavaCode = _.isEmpty(item.JavaCode) ? missingCodeMessage : item.JavaCode;
+    }
+
+    markup = question.CSharpCode;
+    if (markup) {
+      item.CSharpCode = (new Buffer(markup)).toString('utf-8');
+      item.CSharpCode = _.isEmpty(item.CSharpCode) ? missingCodeMessage : item.CSharpCode;
+    }
+
+    item.DifficultyRank = question.DifficultyRank;
+    item.ExplanationQuality = question.ExplanationQuality;
+    item.Tags = question.Tags;
+    item.OneLiner = question.OneLiner;
+
+    // Dummy data for d3 starts
+    var arr = [];
+
+    arr[0] = "";
+
+    item.SVG = arr;
+
+  });
+}
+
+function RenderLandingPage(req, res) {
+  var r = fs.readFileSync('views/index.mustache', {encoding: 'utf-8'}),
+    head = fs.readFileSync('views/head.mustache', {encoding: 'utf-8'});
+
+  r = mustache.to_html(r,
+    {user: {
+      userName: '' //req.user.UserName
+    }},
+    {
+      head: head
+    });
+
+  res.setHeader('content-type', 'text/html')
+  res.write(r);
+  res.end();
+
+}
+
+router.post('/', function (req, res) {
+
+  // Add the picture and other information to the
+  // database
+
+  res.send(200);
+  res.end();
+
+});
+
+module.exports = router;
+
+/*
+ * Create multipart parser to parse given request
+ */
+function parse_multipart(req) {
+  var parser = multipart.parser();
+
+  // Make parser use parsed request headers
+  parser.headers = req.headers;
+
+  // Add listeners to request, transfering data to parser
+
+  req.addListener("data", function (chunk) {
+    parser.write(chunk);
+  });
+
+  req.addListener("end", function () {
+    parser.close();
+  });
+
+  return parser;
+}
+
+/*
+ * Handle file upload
+ */
+function upload_file(req, res) {
+  // Request body is binary
+  req.setBodyEncoding("binary");
+
+  // Handle request as multipart
+  var stream = parse_multipart(req);
+
+  var fileName = null;
+  var fileStream = null;
+
+  // Set handler for a request part received
+  stream.onPartBegin = function (part) {
+    sys.debug("Started part, name = " + part.name + ", filename = " + part.filename);
+
+    // Construct file name
+    fileName = "./uploads/" + stream.part.filename;
+
+    // Construct stream used to write to file
+    fileStream = fs.createWriteStream(fileName);
+
+    // Add error handler
+    fileStream.addListener("error", function (err) {
+      sys.debug("Got error while writing to file '" + fileName + "': ", err);
+    });
+
+    // Add drain (all queued data written) handler to resume receiving request data
+    fileStream.addListener("drain", function () {
+      req.resume();
+    });
+  };
+
+  // Set handler for a request part body chunk received
+  stream.onData = function (chunk) {
+    // Pause receiving request data (until current chunk is written)
+    req.pause();
+
+    // Write chunk to file
+    // Note that it is important to write in binary mode
+    // Otherwise UTF-8 characters are interpreted
+    sys.debug("Writing chunk");
+    fileStream.write(chunk, "binary");
+  };
+
+  // Set handler for request completed
+  stream.onEnd = function () {
+    // As this is after request completed, all writes should have been queued by now
+    // So following callback will be executed after all the data is written out
+    fileStream.addListener("drain", function () {
+      // Close file stream
+      fileStream.end();
+      // Handle request completion, as all chunks were already written
+      upload_complete(res);
+    });
+  };
+}
+
+function upload_complete(res) {
+  // Render response
+  res.sendHeader(200, {"Content-Type": "text/plain"});
+  res.write("Thanks for playing!");
+  res.end();
+
+  sys.puts("\n=> Done");
+}

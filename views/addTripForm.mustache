@@ -1,23 +1,27 @@
 <!-- ko with:AddTripFormModel-->
 <div data-bind="css:{'hide' : !showForm()}" class="hide addTripForm">
-    <form>
+    <form enctype="multipart/form-data">
         <div class="clearfix">
             <h3 class="pull-left">Add a Trip</h3>
             <a class="pull-right" data-bind="click:onCancel">Cancel</a>
         </div>
 
         <div>
-            <label style="width: 20%; text-align: right">Place</label>
-            <input type="text" data-bind="value: name" style="width: 50%; text-align: left">
+            <label for="placeName" style="width: 20%; text-align: right">Place</label>
+            <input name="placeName" type="text" data-bind="value: name" style="width: 50%; text-align: left">
         </div>
 
         <div>
-            <label style="width: 20%; text-align: right">Description</label>
-            <input type="text" data-bind="value: description" style="width: 50%; height: 10em; text-align: left">
+            <label for="placeDescription" style="width: 20%; text-align: right">Description</label>
+            <input name="placeDescription" type="text" data-bind="value: description" style="width: 50%; height: 10em; text-align: left">
         </div>
 
-        <label>Upload Photos</label>
+        <label for="placePhoto">Upload Photos</label>
+        <input name="placePhoto" type="file">
 
+        <div style="width: 100%;" class="clearfix">
+            <button type="button" class="pull-right" data-bind="event:{click:function(d,t){OnSubmitForm(d,t); return false;}}">Submit</button>
+        </div>
 
     </form>
 </div>
