@@ -174,11 +174,13 @@ router.post('/', function (req, res) {
 
   fs.readFile(req.files.placePhoto.path, function (err, data) {
     var newPath = __dirname + "/user_images/" + fileName;
-    console.log(newPath);
     fs.writeFile(newPath, data, function (err) {
       res.end();
     });
   });
+
+
+
 });
 
 module.exports = router;
