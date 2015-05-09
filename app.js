@@ -38,7 +38,7 @@ app.use(cookieParser());
 
 app.use('/auth/facebook', fbAuth);
 
-app.use(multer({ dest: './uploads/',
+app.use(multer({ inMemory:true,
   rename: function (fieldname, filename) {
     return filename + Date.now();
   },

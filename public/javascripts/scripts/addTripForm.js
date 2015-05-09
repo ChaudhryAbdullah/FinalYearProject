@@ -15,12 +15,9 @@ define(["require", "jquery", "knockout", "pubsub"], function (require, $, ko, pu
     };
 
     _this.OnSubmitForm = function (d, t) {
-//
-//      var formData = new FormData($(t)[0]);
       //Grab the form data
       var form = $(t.target).parents("form").first()[0];
       var nf = new FormData(form);
-//      nf.append("test", "hassan");
 
       $.ajax({
         url: window.location.origin + "/addTrip",
@@ -28,7 +25,6 @@ define(["require", "jquery", "knockout", "pubsub"], function (require, $, ko, pu
         data: nf,
         async: false,
         success: function (data) {
-          alert(data);
         },
         cache: false,
         contentType: false,
