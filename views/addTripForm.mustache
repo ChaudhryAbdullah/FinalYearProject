@@ -1,5 +1,5 @@
 <!-- ko with:AddTripFormModel-->
-<div data-bind="css:{'hide' : !showForm()}" class="hide addTripForm">
+<div data-bind="css:{'hide' : state() !== 'addtripform'}" class="addTripForm hide">
     <form enctype="multipart/form-data">
         <div class="clearfix">
             <h3 class="pull-left">Add a Trip</h3>

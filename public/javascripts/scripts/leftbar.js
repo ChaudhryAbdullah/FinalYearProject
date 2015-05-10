@@ -3,7 +3,7 @@ define(["require", "jquery", "knockout", "pubsub"], function (require, $, ko, pu
     var _this = this;
 
     _this.OnAddTrip = function(){
-      pubsub.publish("showAddTripForm");
+      pubsub.publish("stateChange", "addtripform");
     };
 
     _this.OnAddEvent = function(){

@@ -14,7 +14,7 @@ function CreateSQLConnection() {
     user: process.env.OPENSHIFT_MYSQL_DB_USERNAME || 'root',
     port: 3306,
     password: process.env.OPENSHIFT_MYSQL_DB_PASSWORD || 'password',
-    database: process.env.OPENSHIFT_MYSQL_DB_HOST ? 'demo' : 'GetInTech',
+    database: process.env.OPENSHIFT_MYSQL_DB_HOST ? 'demo' : 'Tourister',
     multipleStatements: true
   });
 
@@ -27,8 +27,8 @@ function GetSQL(tags, page, res, req) {
   var response = {},
     connection = CreateSQLConnection(),
     i = 0,
-    query = 'SELECT QuestionID, QuestionMarkup, DifficultyRank, Tags, OneLiner FROM table1'+ (req.user.status != 'admin' ? ' WHERE status="release"' : ''),
-    q2 = 'SELECT count(*) FROM table1'+ (req.user.status != 'admin' ? ' WHERE status="release"' : '');
+    query = 'SELECT QuestionID, QuestionMarkup, DifficultyRank, Tags, OneLiner FROM table1' + (req.user.status != 'admin' ? ' WHERE status="release"' : ''),
+    q2 = 'SELECT count(*) FROM table1' + (req.user.status != 'admin' ? ' WHERE status="release"' : '');
 
   // Add filter by tags criteria
   for (; i < tags.length; i++) {
@@ -124,7 +124,7 @@ function GetQuestion(res, qid) {
     markup = question.JavaCode;
     if (markup) {
       item.JavaCode = (new Buffer(markup)).toString('utf-8');
-      item.JavaCode  = _.isEmpty(item.JavaCode) ? missingCodeMessage : item.JavaCode;
+      item.JavaCode = _.isEmpty(item.JavaCode) ? missingCodeMessage : item.JavaCode;
     }
 
     markup = question.CSharpCode;
@@ -192,7 +192,7 @@ router.get('/home', function (req, res) {
 
   home = mustache.to_html(home,
     {user: {
-      userName:  req.user.UserName
+      userName: req.user.UserName
     }},
     {
       navbar: navBar,
@@ -210,8 +210,22 @@ router.get('/home', function (req, res) {
 
 });
 
-router.get('/tags', function (req, res) {
-  res.send(JSON.stringify(constants.Tags));
+router.get('/newsfeed', function (req, res) {
+
+  var connection = CreateSQLConnection(),
+    query = "SELECT * FROM UserTrips WHERE UserID !=" + req.user.UserID + ";"
+
+  connection.query(query, function (err, rows, fields) {
+    if (err) {
+      res.send(500);
+    }
+    else {
+      res.send(rows);
+    }
+    res.end();
+  });
+
+
 });
 
 router.get('/question/:qid', function (req, res) {

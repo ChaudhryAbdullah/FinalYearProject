@@ -50,7 +50,7 @@ define(["require", "jquery", "knockout", "pubsub", "./leftbar", "./addTripForm",
         ko.applyBindings(_applicationModel);
 
         // Initiate the list
-        pubsub.publish("fetchNewsFeed", {});
+        pubsub.publish("stateChange", "newsfeed");
       }
       return _app;
     }());

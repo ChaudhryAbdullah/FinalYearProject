@@ -98,12 +98,10 @@ router.post('/', passport.authenticate('local',
     failureRedirect: '/' }));
 
 router.get('/', function (req, res) {
-  console.log("here hassan");
   if (req.isAuthenticated()) {
     res.redirect('/home');
   }
   else {
-//    res.redirect('/');
     res.sendfile("./views/login.html");
   }
 });

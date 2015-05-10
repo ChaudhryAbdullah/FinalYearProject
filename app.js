@@ -16,6 +16,7 @@ var signup = require('./routes/signup');
 var fbAuth = require('./routes/facebookauth');
 var addTrip = require('./routes/authenticated/addTrip');
 var index = require('./routes/authenticated/index');
+var image = require('./routes/authenticated/image');
 
 var app = express();
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
@@ -38,17 +39,7 @@ app.use(cookieParser());
 
 app.use('/auth/facebook', fbAuth);
 
-app.use(multer({ inMemory:true,
-  rename: function (fieldname, filename) {
-    return filename + Date.now();
-  },
-  onFileUploadStart: function (file) {
-    console.log(file.originalname + ' is starting ...');
-  },
-  onFileUploadComplete: function (file) {
-    console.log(file.fieldname + ' uploaded to  ' + file.path);
-  }
-}));
+app.use(multer({ inMemory:true}));
 
 app.all("*", function (req, res, next) {
 
@@ -56,7 +47,6 @@ app.all("*", function (req, res, next) {
     || req.originalUrl === "/"
     || req.originalUrl === "/login"
     || req.originalUrl === "/auth/facebook"
-    || req.originalUrl === "/editor"
     || req.originalUrl === "/signup") {
     console.log("REQUEST IS AUTHENTICATED = " + req.originalUrl);
     return next();
@@ -71,6 +61,7 @@ app.use('/login', login);
 app.use('/logout',logout);
 app.use('/signup', signup);
 app.use('/addTrip', addTrip);
+app.use('/photo', image);
 app.use('/', index);
 
 

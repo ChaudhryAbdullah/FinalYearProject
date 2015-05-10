@@ -14,7 +14,7 @@ function CreateSQLConnection() {
     user: process.env.OPENSHIFT_MYSQL_DB_USERNAME || 'root',
     port: 3306,
     password: process.env.OPENSHIFT_MYSQL_DB_PASSWORD || 'password',
-    database: process.env.OPENSHIFT_MYSQL_DB_HOST ? 'demo' : 'GetInTech',
+    database: process.env.OPENSHIFT_MYSQL_DB_HOST ? 'demo' : 'Tourister',
     multipleStatements: true
   });
 
@@ -22,165 +22,39 @@ function CreateSQLConnection() {
   return connection;
 }
 
-function GetSQL(tags, page, res, req) {
-  var response = {},
-    connection = CreateSQLConnection(),
-    i = 0,
-    query = 'SELECT QuestionID, QuestionMarkup, DifficultyRank, Tags, OneLiner FROM table1' + (req.user.status != 'admin' ? ' WHERE status="release"' : ''),
-    q2 = 'SELECT count(*) FROM table1' + (req.user.status != 'admin' ? ' WHERE status="release"' : '');
-
-  // Add filter by tags criteria
-  for (; i < tags.length; i++) {
-    if (i === 0) {
-      query += ' WHERE '
-      q2 += ' WHERE';
-    }
-    else {
-      query += ' OR ';
-      q2 += ' OR';
-    }
-
-    query += 'Tags LIKE ' + '\'%' + tags[i] + '%\'';
-    q2 += 'Tags LIKE ' + '\'%' + tags[i] + '%\'';
-  }
-
-  // Limit by the number of results shown per page
-  if (pageSize) {
-    query += " LIMIT " + pageSize * (page) + ", " + pageSize;
-  }
-
-  var d1 = q.defer(),
-    d2 = q.defer(),
-    q1 = connection.query(query, d1.makeNodeResolver()),
-    q2 = connection.query(q2, d2.makeNodeResolver());
-
-  q.all([d1.promise, d2.promise]).then(function (results) {
-    var rowsCopy = [],
-      rows = results[0][0];
-    i = 0;
-
-    //TODO: check if we need the rowscopy or not
-    console.log('rows count returned = ', rows.length);
-    for (; i < rows.length; i++) {
-      var item = {};
-      item.QuestionID = rows[i].QuestionID;
-      var markup = rows[i].QuestionMarkup;
-      item.QuestionMarkup = (new Buffer(markup)).toString('utf-8');
-      item.DifficultyRank = rows[i].DifficultyRank;
-      item.Tags = rows[i].Tags;
-      item.OneLiner = rows[i].OneLiner;
-
-      rowsCopy.push(item);
-    }
-
-    response.Questions = rowsCopy;
-    response.TotalResults = results[1][0][0]["count(*)"];
-    connection.end(function (err) {
-      if (err) {
-        console.error("connection terminated badly ");
-        console.dir(err);
-      }
-    });
-
-    console.log("sending to client list = " + JSON.stringify(response));
-    res.send(JSON.stringify(response));
-    res.end();
-  });
-}
-
-function GetQuestion(res, qid) {
-
-  var connection = CreateSQLConnection(),
-    query = "SELECT * FROM table1 WHERE QuestionID=" + qid + ";" +
-      "SELECT * FROM Illustrations WHERE QuestionID=" + qid + ";";
-
-  connection.query(query, function (err, rows, fields) {
-    if (err) {
-      throw err;
-    }
-
-    var question = rows[0][0],
-      illustrations = rows[1];
-
-    var item = {};
-    item.QuestionID = question.QuestionID;
-    var markup = question.QuestionMarkup;
-    item.QuestionMarkup = (new Buffer(markup)).toString('utf-8');
-
-    markup = question.SolutionMarkup;
-    item.SolutionMarkup = (new Buffer(markup)).toString('utf-8');
-
-    var missingCodeMessage = "<h3 style='width: 100%; text-align: center'>Ah, bummer ! we haven't been able to get to write out this code yet. </h3>";
-    item.JavascriptCode = missingCodeMessage;
-    item.CSharpCode = missingCodeMessage;
-    item.JavaCode = missingCodeMessage;
-
-    markup = question.JavascriptCode;
-    if (markup) {
-      item.JavascriptCode = (new Buffer(markup)).toString('utf-8');
-    }
-
-    markup = question.JavaCode;
-    if (markup) {
-      item.JavaCode = (new Buffer(markup)).toString('utf-8');
-      item.JavaCode = _.isEmpty(item.JavaCode) ? missingCodeMessage : item.JavaCode;
-    }
-
-    markup = question.CSharpCode;
-    if (markup) {
-      item.CSharpCode = (new Buffer(markup)).toString('utf-8');
-      item.CSharpCode = _.isEmpty(item.CSharpCode) ? missingCodeMessage : item.CSharpCode;
-    }
-
-    item.DifficultyRank = question.DifficultyRank;
-    item.ExplanationQuality = question.ExplanationQuality;
-    item.Tags = question.Tags;
-    item.OneLiner = question.OneLiner;
-
-    // Dummy data for d3 starts
-    var arr = [];
-
-    arr[0] = "";
-
-    item.SVG = arr;
-
-  });
-}
-
-function RenderLandingPage(req, res) {
-  var r = fs.readFileSync('views/index.mustache', {encoding: 'utf-8'}),
-    head = fs.readFileSync('views/head.mustache', {encoding: 'utf-8'});
-
-  r = mustache.to_html(r,
-    {user: {
-      userName: '' //req.user.UserName
-    }},
-    {
-      head: head
-    });
-
-  res.setHeader('content-type', 'text/html')
-  res.write(r);
-  res.end();
-
-}
-
 router.post('/', function (req, res) {
 
   // Add the picture and other information to the
   // database
 
-  var fileName = req.user.UserName + "_" + req.files.placePhoto.name;
+  var fileName = req.user.UserName + "_" + req.files.placePhoto.name,
+    newPath = __dirname + "/user_images/" + fileName;
 
-  fs.readFile(req.files.placePhoto.path, function (err, data) {
-    var newPath = __dirname + "/user_images/" + fileName;
-    fs.writeFile(newPath, data, function (err) {
-      res.end();
-    });
+  fs.writeFile(newPath, req.files.placePhoto.buffer, {'encoding': 'ascii'}, function (err) {
+    {
+      if (err) {
+        res.send(404);
+      }
+      var conn = CreateSQLConnection(),
+        q2 = "insert into UserTrips (UserID, UserName, PlaceName, ImagePath, TripDescription, Coordinates, LikeCount) VALUES('"
+          + req.user.UserID + "',"
+          + "'" + req.user.UserName + "',"
+          + "'" + req.body['placeName'] + "',"
+          + "'" + fileName + "',"
+          + "'" + req.body['placeDescription'] + "',"
+          + "''" + ","
+          + "0" + ")";
+
+      conn.query(q2, function (err, rows, fields) {
+        if (err) {
+          console.log("err = ", err);
+          res.send(404);
+        }
+        res.end();
+      });
+
+    }
   });
-
-
-
 });
 
 module.exports = router;

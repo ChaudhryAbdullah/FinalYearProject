@@ -29,5 +29,25 @@ describe Places;
         
 -- insert into Places VALUES(Null, "Monal", "Restuarant and sight seeing spot on Margalla Hills", "unknown", 0);
 
+drop Table UserTrips;
+Create table UserTrips(
+		TripID INT NOT NULL AUTO_INCREMENT,
+        UserID INT NOT NULL,
+        UserName varchar(100) NOT NULL,
+        PlaceName varchar(1000) NOT NULL,
+        ImagePath varchar (2000) NOT NULL,
+        TripDescription varchar(5000) NOT NULL,
+        Coordinates varchar(1000),
+        LikeCount INT,
+        PRIMARY KEY(TripID));
+
+describe UserTrips;
+
 select * from Users;
+
+SELECT * FROM Users WHERE useremail='hassanafzal@hotmail.com'
 select * from Places;
+
+select * from UserTrips where UserID != 2;
+
+-- delete from UserTrips;
