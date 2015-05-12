@@ -1,3 +1,16 @@
-<div class="suggestedPlaces">
-    Suggested Places for the user
+<!-- ko with:SuggestedPlacesModel -->
+<div class="suggestedPlaces clearfix">
+    <a class="pull-left" data-bind="click:OnPrevClick">Prev</a>
+
+    <div class="pull-left clearfix">
+        <!-- ko foreach:list -->
+        <div class="place pull-left">
+            <img data-bind="attr:{src: $parent.GetImageSrc($data.ImageName)}"/>
+            <span data-bind="text:PlaceName"></span>
+        </div>
+        <!-- /ko -->
+    </div>
+
+    <a class="pull-left" data-bind="click:OnNextClick">Next</a>
 </div>
+<!-- /ko -->

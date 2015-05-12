@@ -187,8 +187,12 @@ router.get('/home', function (req, res) {
     rightBar = fs.readFileSync('views/rightbar.mustache', {encoding: 'utf-8'}),
     leftBar = fs.readFileSync('views/leftbar.mustache', {encoding: 'utf-8'}),
     newsfeed = fs.readFileSync('views/newsfeed.mustache', {encoding: 'utf-8'}),
+    serverdata = fs.readFileSync('views/serverdata.mustache', {encoding: 'utf-8'}),
     suggestedPlaces = fs.readFileSync('views/suggestedPlaces.mustache', {encoding: 'utf-8'}),
     addTripForm = fs.readFileSync('views/addTripForm.mustache', {encoding: 'utf-8'});
+
+
+  var serverdataScript = mustache.to_html(serverdata, {userJSON: JSON.stringify(req.user)});
 
   home = mustache.to_html(home,
     {user: {
@@ -201,6 +205,7 @@ router.get('/home', function (req, res) {
       newsfeed: newsfeed,
       suggestedPlaces: suggestedPlaces,
       rightbar: rightBar,
+      serverdata: serverdataScript,
       leftbar: leftBar
     });
 
@@ -217,19 +222,32 @@ router.get('/newsfeed', function (req, res) {
 
   connection.query(query, function (err, rows, fields) {
     if (err) {
-      res.send(500);
+      // send appropriate error
     }
     else {
       res.send(rows);
     }
     res.end();
+    connection.end();
   });
-
-
 });
 
-router.get('/question/:qid', function (req, res) {
-  GetQuestion(res, req.params.qid);
+router.get('/suggestedplaces', function (req, res) {
+
+  var connection = CreateSQLConnection(),
+    query = "SELECT * FROM Places";
+
+  connection.query(query, function (err, rows, fields) {
+    if (err) {
+      // send appropriate error
+    }
+    else {
+      res.send(rows);
+    }
+    res.end();
+    connection.end();
+  });
+
 });
 
 router.get('/list', function (req, res) {

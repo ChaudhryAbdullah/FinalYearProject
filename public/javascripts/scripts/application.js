@@ -1,7 +1,7 @@
 /**
  * Created by hassan-MBP on 8/4/14.
  */
-define(["require", "jquery", "knockout", "pubsub", "./leftbar", "./addTripForm", "./newsFeed"],
+define(["require", "jquery", "knockout", "pubsub", "./leftbar", "./addTripForm", "./newsFeed", "./suggestedPlaces"],
   function (require, $, ko, pubsub) {
 
     return (function () {
@@ -9,6 +9,7 @@ define(["require", "jquery", "knockout", "pubsub", "./leftbar", "./addTripForm",
         _leftBar = require("./leftbar"),
         _addTripForm = require("./addTripForm"),
         _newsFeedModel = require("./newsFeed"),
+        _suggestedPlacesModel = require("./suggestedPlaces"),
 
         _applicationModel = {
 //          View: ko.observable("list")
@@ -47,6 +48,7 @@ define(["require", "jquery", "knockout", "pubsub", "./leftbar", "./addTripForm",
         _applicationModel.LeftBarModel = _leftBar;
         _applicationModel.AddTripFormModel = _addTripForm;
         _applicationModel.NewsFeedModel = _newsFeedModel;
+        _applicationModel.SuggestedPlacesModel = _suggestedPlacesModel;
         ko.applyBindings(_applicationModel);
 
         // Initiate the list

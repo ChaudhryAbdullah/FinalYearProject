@@ -17,17 +17,22 @@ use Tourister;
 -- 
 insert into Users VALUES(Null, "TestUser", "", "", "", 0, "user", "1,3");
 
--- Create table Places(
--- 		PlaceID INT NOT NULL AUTO_INCREMENT,
---         PlaceName varchar(1000) NOT NULL,
---         PlaceDescription varchar(5000) NOT NULL,
---         Coordinates varchar(1000),
---         FollowerCount INT,
---         PRIMARY KEY(PlaceID));
---         
+
+-- drop table Places;
+ Create table Places(
+ 		PlaceID INT NOT NULL AUTO_INCREMENT,
+         PlaceName varchar(1000) NOT NULL,
+         ImageName varchar(100),
+         PlaceDescription varchar(5000) NOT NULL,
+         Coordinates varchar(1000),
+         FollowerCount INT,
+         PRIMARY KEY(PlaceID));
+         
 describe Places;        
+
+select * from places
         
--- insert into Places VALUES(Null, "Monal", "Restuarant and sight seeing spot on Margalla Hills", "unknown", 0);
+insert into Places VALUES(Null, "Attabad Lake Hunza Valley","attabad.jpg", "Great tourish spot in Hunza Valley", "unknown", 0);
 
 drop Table UserTrips;
 Create table UserTrips(
