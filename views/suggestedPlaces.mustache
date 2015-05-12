@@ -4,9 +4,14 @@
 
     <div class="pull-left clearfix">
         <!-- ko foreach:list -->
-        <div class="place pull-left">
-            <img data-bind="attr:{src: $parent.GetImageSrc($data.ImageName)}"/>
-            <span data-bind="text:PlaceName"></span>
+        <div class="place pull-left clearfix">
+            <div class="pull-left">
+                <img data-bind="attr:{src: $parent.GetImageSrc($data.ImageName)}"/>
+                <h3 data-bind="text:PlaceName"></h3>
+            </div>
+            <div class=" pull-left description">
+                <p data-bind="text:PlaceDescription"></p>
+            </div>
         </div>
         <!-- /ko -->
     </div>

@@ -32,7 +32,7 @@ describe Places;
 
 select * from places
         
-insert into Places VALUES(Null, "Attabad Lake Hunza Valley","attabad.jpg", "Great tourish spot in Hunza Valley", "unknown", 0);
+insert into Places VALUES(Null, "Hingol National Park","hingol.jpg", "Pakistan's largest national park located in Balochistan", "unknown", 0);
 
 drop Table UserTrips;
 Create table UserTrips(

@@ -3,7 +3,8 @@
  */
 var constants =
 {
-  Tags: [ 'array', 'basic', 'trees', 'binary-tree', 'linked-list', 'recursion', 'dynamic-programming']
+  pageSize : 1
+
 };
 
 module.exports = constants;

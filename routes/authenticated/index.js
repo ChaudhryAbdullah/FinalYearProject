@@ -5,7 +5,6 @@ var router = express.Router();
 var mysql = require('mysql');
 var q = require("q");
 var constants = require('../../server/constants');
-var pageSize = 5;
 var _ = require('underscore');
 
 function CreateSQLConnection() {
@@ -218,7 +217,8 @@ router.get('/home', function (req, res) {
 router.get('/newsfeed', function (req, res) {
 
   var connection = CreateSQLConnection(),
-    query = "SELECT * FROM UserTrips WHERE UserID !=" + req.user.UserID + ";"
+    requestPage = req.query.page ? req.query.page : 0,
+    query = "SELECT * FROM UserTrips WHERE UserID !=" + req.user.UserID + " LIMIT " + requestPage * constants.pageSize + "," + constants.pageSize + ";";
 
   connection.query(query, function (err, rows, fields) {
     if (err) {

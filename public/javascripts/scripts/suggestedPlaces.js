@@ -1,7 +1,7 @@
 define(["require", "jquery", "knockout", "pubsub"], function (require, $, ko, pubsub) {
   function SuggestedPlacesModel() {
     var _this = this,
-      sizeOfDisplayList = 2,
+      sizeOfDisplayList = 1,
       _completeList;
     _this.state = ko.observable("");
     _this.list = ko.observable([]);

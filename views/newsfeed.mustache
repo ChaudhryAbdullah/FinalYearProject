@@ -5,7 +5,7 @@
     <div style="overflow-y: scroll; height: 600px ">
 
         <!-- ko foreach: newsfeed -->
-        <div style="width: 100%; height: 10em; background-color: darkkhaki; margin-bottom: 5px">
+        <div class="feedlet">
             <span>Trip to </span><span data-bind="text: $data.PlaceName"></span>
             <span> by </span> <span data-bind="text:$data.UserName"></span>
             <div>
@@ -18,7 +18,7 @@
         <!-- /ko -->
     </div>
     <div>
-        <button style="margin-left: auto; margin-right: auto; width:250px; display: block">Load More Activities</button>
+        <button class="load-more-btn" data-bind="click:OnMoreBtn">Load More Activities</button>
     </div>
 </div>
 <!-- /ko -->

@@ -1,18 +1,26 @@
 define(["require", "jquery", "knockout", "pubsub"], function (require, $, ko, pubsub) {
   function NewsFeedModel() {
-    var _this = this;
+    var _this = this,
+      pageNumber = 0;
+
     _this.state = ko.observable("");
     _this.newsfeed = ko.observableArray([]);
 
     pubsub.subscribe("stateChange", function (newState) {
       _this.state(newState);
+      pageNumber = 0;
       FetchNewsFeed();
     });
 
     function FetchNewsFeed() {
-      var url = window.location.origin + "/newsfeed";
+      var url = window.location.origin + "/newsfeed?page=" + pageNumber;
       $.get(url, function (args) {
-        _this.newsfeed(args);
+        if (!pageNumber) {
+          _this.newsfeed(args);
+        }
+        else {
+          _this.newsfeed(_this.newsfeed().concat(args));
+        }
       });
     }
 
@@ -20,8 +28,9 @@ define(["require", "jquery", "knockout", "pubsub"], function (require, $, ko, pu
       return window.location.origin + "/photo?id=" + imageName;
     };
 
-    _this.OnMoreBtnClick = function () {
-
+    _this.OnMoreBtn = function () {
+      pageNumber++;
+      FetchNewsFeed();
     };
   }
 
