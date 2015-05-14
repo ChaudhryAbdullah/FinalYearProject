@@ -3,7 +3,7 @@
  */
 var constants =
 {
-  pageSize : 1
+  pageSize : 15
 
 };
 
