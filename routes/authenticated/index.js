@@ -251,6 +251,25 @@ router.get('/suggestedplaces', function (req, res) {
 
 });
 
+
+router.post('/user', function (req, res) {
+
+  // Update the user's liked places
+  var conn = CreateSQLConnection(),
+    query = "UPDATE Users SET LikedPlaces='" + req["body"].LikedPlaces + "' WHERE UserID =" + req.user.UserID;
+
+  conn.query(query, function (err, rows, fields) {
+    if (err) {
+      // Send appropriate error message
+    }
+    res.end();
+    conn.end();
+  });
+
+
+});
+
+
 router.get('/list', function (req, res) {
   var tags = req.query.tags ? req.query.tags.split(",") : [];
   var requestPage = req.query.page ? req.query.page : 0;
