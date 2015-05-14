@@ -55,4 +55,10 @@ select * from Places;
 
 select * from UserTrips where UserID != 2;
 
+-- SET SQL_SAFE_UPDATES = 0;
 -- delete from UserTrips;
+
+SELECT * FROM UserTrips WHERE UserID !=2 LIMIT 1,1
+
+select * from UserTrips;
+delete from UserTrips;

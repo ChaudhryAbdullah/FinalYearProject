@@ -5,13 +5,17 @@
     <div class="pull-left clearfix">
         <!-- ko foreach:list -->
         <div class="place pull-left clearfix">
-            <div class="pull-left">
+            <div class="pull-left" style="width: 30%">
                 <img data-bind="attr:{src: $parent.GetImageSrc($data.ImageName)}"/>
+            </div>
+            <div class=" pull-left" style="width: 70%">
                 <h3 data-bind="text:PlaceName"></h3>
+                <p class="description" data-bind="text:PlaceDescription"></p>
             </div>
-            <div class=" pull-left description">
-                <p data-bind="text:PlaceDescription"></p>
+            <div class="follow">
+                <a class="glyphicon glyphicon-heart heart"><span>follow</span></a>
             </div>
+
         </div>
         <!-- /ko -->
     </div>

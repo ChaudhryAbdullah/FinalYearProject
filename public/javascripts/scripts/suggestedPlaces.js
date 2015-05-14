@@ -1,8 +1,8 @@
-define(["require", "jquery", "knockout", "pubsub"], function (require, $, ko, pubsub) {
+define(["require", "jquery", "underscore", "knockout", "pubsub"], function (require, $, _, ko, pubsub) {
   function SuggestedPlacesModel() {
     var _this = this,
       sizeOfDisplayList = 1,
-      _completeList;
+      _completeList = [];
     _this.state = ko.observable("");
     _this.list = ko.observable([]);
 
@@ -11,9 +11,23 @@ define(["require", "jquery", "knockout", "pubsub"], function (require, $, ko, pu
     });
 
     function PopulateWithPlaces() {
-      var url = window.location.origin + "/suggestedPlaces";
+      var url = window.location.origin + "/suggestedPlaces",
+        likedPlaces;
       $.get(url, function (args) {
-        _completeList = args;
+
+        // Filter out those places which are already liked by the user
+        likedPlaces = window.Tourister.User.LikedPlace ? window.Tourister.User.LikedPlace.split("|") : [];
+
+        _.each(args, function (place) {
+          var found = _.find(likedPlaces, function (id) {
+            return id == place.PlaceID;
+          });
+
+          if (!found) {
+            _completeList.push(place);
+          }
+        });
+
         _this.list(_completeList.slice(0, sizeOfDisplayList));
       });
     }

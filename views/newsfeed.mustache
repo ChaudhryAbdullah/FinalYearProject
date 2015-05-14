@@ -1,19 +1,25 @@
 <!-- ko with: NewsFeedModel -->
 <div class="newsfeed" data-bind="css:{'hide' : state() !== 'newsfeed'}">
-    <h3>Latest Happenings ...</h3>
+    <h3>Travel Feed</h3>
 
-    <div style="overflow-y: scroll; height: 600px ">
+    <div class="feedlet-cntr">
 
         <!-- ko foreach: newsfeed -->
-        <div class="feedlet">
-            <span>Trip to </span><span data-bind="text: $data.PlaceName"></span>
-            <span> by </span> <span data-bind="text:$data.UserName"></span>
-            <div>
+        <div class="feedlet clearfix">
+            <div class="title pull-left">
+                <span data-bind="text:$data.UserName"></span> <span> recently visited </span>
+                <span data-bind="text: $data.PlaceName"></span>
                 <p data-bind="text:$data.TripDescription">
                 </p>
+                <div class="actions">
+                    <a>Upcoming Events</a>
+                    <span>|</span>
+                    <a>Similar Trips</a>
+                </div>
             </div>
-            <span>Snapshots</span>
-            <img style="width:200px; height: 5em;" data-bind="attr:{src:$parent.GetImageUrl($data.ImagePath)}"/>
+            <div class="images pull-left">
+                <img data-bind="attr:{src:$parent.GetImageUrl($data.ImagePath)}"/>
+            </div>
         </div>
         <!-- /ko -->
     </div>

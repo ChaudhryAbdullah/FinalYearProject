@@ -1,25 +1,65 @@
-.newsfeed{
-  top:0;
-  position:absolute;
+@import "common.less";
+
+.newsfeed {
+  top: 0;
+  position: absolute;
   width: 100%;
   height: 100%;
-  background-color: lightgrey;
 
-  h3{
-    text-align: center;
+  .feedlet-cntr {
+    overflow-y: scroll;
+    height: 600px;
+    border: 2px solid @Gray;
+    border-radius: 3px;
   }
 
-  .feedlet{
+  h3 {
+    text-align: center;
+    color: #8DCDC1;
+  }
+
+  .feedlet {
     width: 100%;
     height: 10em;
-    background-color: lightgrey;
-    margin-bottom: 5px
+    background-color: #FFF5C3;
+    margin-bottom: 5px;
+//    border: 2px solid #ffff00;
+    padding: 5px 5px;
+    color: @Gray;
+
+    .title {
+      width: 50%;
+      span {
+        color: @Orange;
+        font-size: 18px;
+      }
+      p {
+        color: @Green;
+        font-size: 14px;
+      }
+      .actions {
+        margin-top:10px;
+        a {
+          color: @Orange;
+          text-decoration: underline;
+          font-size:12px;
+        }
+      }
+    }
+
+    .images {
+      width: 50%;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
   }
 
-  .load-more-btn{
+  .load-more-btn {
     margin-left: auto;
     margin-right: auto;
-    width:250px;
+    width: 250px;
     display: block;
   }
 }

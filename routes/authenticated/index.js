@@ -218,7 +218,8 @@ router.get('/newsfeed', function (req, res) {
 
   var connection = CreateSQLConnection(),
     requestPage = req.query.page ? req.query.page : 0,
-    query = "SELECT * FROM UserTrips WHERE UserID !=" + req.user.UserID + " LIMIT " + requestPage * constants.pageSize + "," + constants.pageSize + ";";
+//    query = "SELECT * FROM UserTrips WHERE UserID !=" + req.user.UserID + " LIMIT " + requestPage * constants.pageSize + "," + constants.pageSize + ";",
+    query = "SELECT * FROM UserTrips LIMIT " + requestPage * constants.pageSize + "," + constants.pageSize + ";";
 
   connection.query(query, function (err, rows, fields) {
     if (err) {

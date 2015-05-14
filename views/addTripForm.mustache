@@ -1,9 +1,11 @@
 <!-- ko with:AddTripFormModel-->
 <div data-bind="css:{'hide' : state() !== 'addtripform'}" class="addTripForm hide">
+
+    <h3 class="form-hdgn">Add your activity</h3>
     <form enctype="multipart/form-data">
         <div class="clearfix">
             <h3 class="pull-left">Add a Trip</h3>
-            <a class="pull-right" data-bind="click:onCancel">Cancel</a>
+            <a class="pull-right cancel" data-bind="click:onCancel">Cancel</a>
         </div>
 
         <div>
@@ -20,7 +22,7 @@
         <input name="placePhoto" type="file">
 
         <div style="width: 100%;" class="clearfix">
-            <button type="button" class="pull-right" data-bind="event:{click:function(d,t){OnSubmitForm(d,t); return false;}}">Submit</button>
+            <button type="button" class="pull-right submit" data-bind="event:{click:function(d,t){OnSubmitForm(d,t); return false;}}">Submit</button>
         </div>
 
     </form>

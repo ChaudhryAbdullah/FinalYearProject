@@ -1,28 +1,38 @@
+@import "common.less";
+
 .rightbar{
 
   h3{
     text-align: center;
+    color:#8DCDC1;
   }
 
   .event{
-    background-color: darkseagreen;
-    border:2px solid white;
+    background-color: @Biege;
+    border:1px solid @Gray;
     width: 85%;
     margin-left: auto;
     margin-right: auto;
-//    height: 350px;
     padding: 7px 5px;
 
     .title{
-      color:#ffffff;
+      color:@Gray;
       display: block;
       width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
+    .timestamp{
+      color:@Gray;
+    }
+
     .description{
-      color:azure;
+      color:@Gray;
+    }
+
+    .join{
+      color:@Orange;
     }
   }
 }

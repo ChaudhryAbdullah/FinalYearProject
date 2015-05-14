@@ -1,5 +1,39 @@
-.addTripForm{
+@import "common.less";
+
+.addTripForm {
   position: absolute;
-  top:0;
-  width:100%;
+  top: 0;
+  width: 100%;
+  height: 1000px;
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 0 20px;
+  border:2px solid @Green;
+
+  .form-hdgn{
+    color: @BrightGreen;
+  }
+
+
+
+  form{
+    border:2px solid @Green;
+    padding: 10px 20px;
+    input{
+      color: @Orange;
+    }
+
+    .cancel{
+      color: @Orange;
+    }
+
+    .submit{
+      color:@Green;
+      border:0;
+      background-color: #ffffff;
+    }
+
+    label{
+      color:@Green;
+    }
+  }
 }
