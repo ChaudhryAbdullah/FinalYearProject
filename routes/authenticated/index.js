@@ -188,7 +188,8 @@ router.get('/home', function (req, res) {
     newsfeed = fs.readFileSync('views/newsfeed.mustache', {encoding: 'utf-8'}),
     serverdata = fs.readFileSync('views/serverdata.mustache', {encoding: 'utf-8'}),
     suggestedPlaces = fs.readFileSync('views/suggestedPlaces.mustache', {encoding: 'utf-8'}),
-    addTripForm = fs.readFileSync('views/addTripForm.mustache', {encoding: 'utf-8'});
+    addTripForm = fs.readFileSync('views/addTripForm.mustache', {encoding: 'utf-8'}),
+    addEventForm = fs.readFileSync('views/addEventForm.mustache', {encoding: 'utf-8'});
 
 
   var serverdataScript = mustache.to_html(serverdata, {userJSON: JSON.stringify(req.user)});
@@ -201,6 +202,7 @@ router.get('/home', function (req, res) {
       navbar: navBar,
       head: head,
       addTripForm: addTripForm,
+      addEventForm:addEventForm,
       newsfeed: newsfeed,
       suggestedPlaces: suggestedPlaces,
       rightbar: rightBar,

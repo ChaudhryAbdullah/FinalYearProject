@@ -7,7 +7,8 @@ define(["require", "jquery", "knockout", "pubsub"], function (require, $, ko, pu
     };
 
     _this.OnAddEvent = function(){
-//      pubsub.publish("showAddTripForm");
+
+     pubsub.publish("stateChange", "addeventform");
     };
 
   }

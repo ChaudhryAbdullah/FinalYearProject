@@ -1,13 +1,14 @@
 /**
  * Created by hassan-MBP on 8/4/14.
  */
-define(["require", "jquery", "knockout", "pubsub", "./leftbar", "./addTripForm", "./newsFeed", "./suggestedPlaces"],
+define(["require", "jquery", "knockout", "pubsub", "./leftbar", "./addTripForm","./addEventForm", "./newsFeed", "./suggestedPlaces"],
   function (require, $, ko, pubsub) {
 
     return (function () {
       var _app = {},
         _leftBar = require("./leftbar"),
         _addTripForm = require("./addTripForm"),
+        _addEventForm = require("./addEventForm"),
         _newsFeedModel = require("./newsFeed"),
         _suggestedPlacesModel = require("./suggestedPlaces"),
 
@@ -49,6 +50,7 @@ define(["require", "jquery", "knockout", "pubsub", "./leftbar", "./addTripForm",
         _applicationModel.AddTripFormModel = _addTripForm;
         _applicationModel.NewsFeedModel = _newsFeedModel;
         _applicationModel.SuggestedPlacesModel = _suggestedPlacesModel;
+        _applicationModel.AddEventFormModel = _addEventForm,
         ko.applyBindings(_applicationModel);
 
         // Initiate the list

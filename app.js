@@ -15,6 +15,7 @@ var logout = require('./routes/logout');
 var signup = require('./routes/signup');
 var fbAuth = require('./routes/facebookauth');
 var addTrip = require('./routes/authenticated/addTrip');
+var addEvent = require('./routes/authenticated/addEvent');
 var index = require('./routes/authenticated/index');
 var image = require('./routes/authenticated/image');
 
@@ -61,6 +62,7 @@ app.use('/login', login);
 app.use('/logout',logout);
 app.use('/signup', signup);
 app.use('/addTrip', addTrip);
+app.use('/addEvent', addEvent);
 app.use('/photo', image);
 app.use('/', index);
 
@@ -69,6 +71,7 @@ app.use('/', index);
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
+
   next(err);
 });
 
