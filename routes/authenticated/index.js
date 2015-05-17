@@ -254,6 +254,26 @@ router.get('/suggestedplaces', function (req, res) {
 });
 
 
+router.get('/UserEvents', function (req, res) {
+
+  var connection = CreateSQLConnection(),
+    query = "SELECT * FROM UserEvents";
+
+  connection.query(query, function (err, rows, fields) {
+    if (err) {
+      // send appropriate error
+    }
+    else {
+      res.send(rows);
+    }
+    res.end();
+    connection.end();
+  });
+
+});
+
+
+
 router.post('/user', function (req, res) {
 
   // Update the user's liked places
