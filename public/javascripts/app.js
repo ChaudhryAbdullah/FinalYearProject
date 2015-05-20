@@ -9,6 +9,7 @@ requirejs.config({
     mustache  : './thirdparty/mustache',
     knockout  : './thirdparty/knockout',
     pubsub    : './thirdparty/pubsub',
+    moment    : './thirdparty/momentjs',
     underscore: './thirdparty/underscore',
     main      : './scripts/main'
   }

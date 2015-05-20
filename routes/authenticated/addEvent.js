@@ -22,9 +22,6 @@ function CreateSQLConnection() {
   return connection;
 }
 
-
-
-
 router.post('/', function (req, res) {
 
  var conn = CreateSQLConnection(),
@@ -48,5 +45,22 @@ router.post('/', function (req, res) {
 
   });
 
+
+router.get('/', function (req, res) {
+
+  var conn = CreateSQLConnection(),
+    q2 = "select * from UserEvents;";
+
+  conn.query(q2, function (err, rows, fields) {
+    if (err) {
+      console.log("err = ", err);
+      res.send(404);
+    }
+    res.end();
+  });
+
+
+
+});
 
 module.exports = router;

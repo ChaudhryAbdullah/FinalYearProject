@@ -1,7 +1,7 @@
 /**
  * Created by hassan-MBP on 8/4/14.
  */
-define(["require", "jquery", "knockout", "pubsub", "./leftbar", "./addTripForm","./addEventForm", "./newsFeed", "./suggestedPlaces"],
+define(["require", "jquery", "knockout", "pubsub", "./leftbar", "./rightbar", "./addTripForm","./addEventForm", "./newsFeed", "./suggestedPlaces"],
   function (require, $, ko, pubsub) {
 
     return (function () {
@@ -11,6 +11,7 @@ define(["require", "jquery", "knockout", "pubsub", "./leftbar", "./addTripForm",
         _addEventForm = require("./addEventForm"),
         _newsFeedModel = require("./newsFeed"),
         _suggestedPlacesModel = require("./suggestedPlaces"),
+        _rightBar = require("./rightbar");
 
         _applicationModel = {
 //          View: ko.observable("list")
@@ -47,6 +48,7 @@ define(["require", "jquery", "knockout", "pubsub", "./leftbar", "./addTripForm",
         // $(window).scroll(onScroll);
 
         _applicationModel.LeftBarModel = _leftBar;
+        _applicationModel.RightBarModel = _rightBar;
         _applicationModel.AddTripFormModel = _addTripForm;
         _applicationModel.NewsFeedModel = _newsFeedModel;
         _applicationModel.SuggestedPlacesModel = _suggestedPlacesModel;
