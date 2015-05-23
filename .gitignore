@@ -1,6 +1,5 @@
 .idea/*
 .DS_Store
 *.iml
-/routes/authenticated/user_images/*
 node_modules/*
 npm-debug.log
