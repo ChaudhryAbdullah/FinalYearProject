@@ -56,41 +56,18 @@ passport.serializeUser(function (user, done) {
 
   console.log("CALLED SERAILZE here " + user.UserID);
   console.dir(user);
-  done(null, user.UserID);
+
+  // Serialize the user for session
+
+  done(null, user);
 });
 
-passport.deserializeUser(function (id, done) {
+passport.deserializeUser(function (user, done) {
 
+  // Grab the user record from the session
+  done(null, user);
   console.log("CALLED DESERAILZE here ");
 
-  var conn = CreateSQLConnection(),
-    query = 'SELECT * FROM Users WHERE userid=' + '\'' + id + '\'',
-    d1;
-
-  d1 = q.defer();
-  conn.query(query, d1.makeNodeResolver());
-
-  q.all([d1.promise]).then(function (results) {
-    var found = results[0][0].length === 1,
-      i = 0 ,
-      userRecord;
-
-    if (found) {
-
-      userRecord = {}
-//      userRecord['UserID'] = results[0][0][0]['UserID'];
-      for (i = 0; i < results[0][1].length; i++) {
-        userRecord[results[0][1][i].orgName] = results[0][0][0][results[0][1][i].orgName];
-      }
-
-      done(null, userRecord);
-    }
-    else {
-      done(null, {});
-    }
-
-    conn.end();
-  });
 });
 
 router.post('/', passport.authenticate('local',
