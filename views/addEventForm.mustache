@@ -2,6 +2,7 @@
 <div data-bind="css:{'hide' : state() !== 'addeventform'}" class="addEventForm hide">
 
     <h3 class="form-hdgn">Add your Activity</h3>
+
     <form enctype="multipart/form-data">
         <div class="clearfix">
             <h3 class="pull-left">Add an Event</h3>
@@ -15,14 +16,17 @@
 
         <div>
             <label for="EventDescription" style="width: 20%; text-align: right">Description</label>
-            <input name="EventDescription" type="text" data-bind="value: description" style="width: 50%; height: 10em; text-align: left">
+            <input name="EventDescription" type="text" data-bind="value: description"
+                   style="width: 50%; height: 10em; text-align: left">
         </div>
 
         <label for="eventTime">Time</label>
-        <input name="eventTime" type="datetime-local" placeholder="yyyy-mm-ddThh:mm">
+        <input name="eventTime" type="datetime-local" placeholder="yyyy-mm-ddThh:mm" data-bind="value:datetime">
 
         <div style="width: 100%;" class="clearfix">
-            <button type="button" class="pull-right submit" data-bind="event:{click:function(d,t){OnSubmitForm(d,t); return false;}}">Submit</button>
+            <button type="button" class="pull-right submit"
+                    data-bind="event:{click:function(d,t){OnSubmitForm(d,t); return false;}}">Submit
+            </button>
         </div>
 
     </form>

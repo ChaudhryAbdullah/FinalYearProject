@@ -59,7 +59,7 @@ passport.serializeUser(function (user, done) {
 
   // Serialize the user for session
 
-  done(null, user);
+  done(null, user)
 });
 
 passport.deserializeUser(function (user, done) {
