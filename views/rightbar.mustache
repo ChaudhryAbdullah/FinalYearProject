@@ -3,8 +3,14 @@
     <h3>Events</h3>
     <!-- ko foreach:events -->
     <div class="event">
-        <span class="title" data-bind="text:$data.EventName"></span>
-        <span class="timestamp" data-bind="text:$data.EventTime"></span>
+        <div class="clearfix" style="margin-bottom: 5px">
+            <span class="pull-left" style="width:25%;font-weight: bold;">Title:</span>
+            <span class="title pull-left" data-bind="text:$data.EventName"></span>
+        </div>
+        <div class="clearfix" style="margin-bottom: 5px">
+            <span class="pull-left" style="width:25%;font-weight: bold;">Time:</span>
+            <span class="timestamp" data-bind="text:$data.EventTime"></span>
+        </div>
         <p class="description" data-bind="text:$data.EventDescription"></p>
         <button class="join">Join</button>
     </div>

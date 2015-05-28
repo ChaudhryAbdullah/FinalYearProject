@@ -21,11 +21,17 @@
   .feedlet {
     width: 100%;
     height: 10em;
-    background-color: #FFF5C3;
+    background-color: #fafafa;
     margin-bottom: 5px;
 //    border: 2px solid #ffff00;
     padding: 5px 5px;
     color: @Gray;
+
+    &:hover{
+      border:1px solid darkgray;
+      background-color: #eeeeee;
+
+    }
 
     .title {
       width: 50%;
@@ -52,7 +58,11 @@
       img {
         width: 100%;
         height: 100%;
+        &:hover{
+            zoom: 1.3;
+        }
       }
+
     }
   }
 

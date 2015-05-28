@@ -1,6 +1,6 @@
 <!-- ko with:SuggestedPlacesModel -->
 <div class="suggestedPlaces clearfix">
-    <a class="pull-left" data-bind="click:OnPrevClick">Prev</a>
+    <a href="#" role="button" class="btn btn-default pull-left" data-bind="click:OnPrevClick">Prev</a>
 
     <div class="pull-left clearfix">
         <!-- ko foreach:list -->
@@ -13,13 +13,13 @@
                 <p class="description" data-bind="text:PlaceDescription"></p>
             </div>
             <div class="follow" data-bind="click:$parent.FollowPlace">
-                <a class="glyphicon glyphicon-heart heart"><span>follow</span></a>
+                <a href="#" role="button" class="glyphicon glyphicon-heart heart"><span>follow</span></a>
             </div>
 
         </div>
         <!-- /ko -->
     </div>
 
-    <a class="pull-left" data-bind="click:OnNextClick">Next</a>
+    <a href="#" role="button" class="btn btn-default pull-left" data-bind="click:OnNextClick">Next</a>
 </div>
 <!-- /ko -->
