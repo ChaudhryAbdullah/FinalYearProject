@@ -284,6 +284,10 @@ router.post('/user', function (req, res) {
     if (err) {
       // Send appropriate error message
     }
+
+    // Also update in session
+    req.user.LikedPlaces = req["body"].LikedPlaces;
+
     res.end();
     conn.end();
   });
