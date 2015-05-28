@@ -39,9 +39,9 @@ router.post('/', function (req, res) {
         q2 = "insert into UserTrips (UserID, UserName, PlaceName, ImagePath, TripDescription, Coordinates, LikeCount) VALUES('"
           + req.user.UserID + "',"
           + "'" + req.user.UserName + "',"
-          + "'" + conn.escape(req.body['placeName']) + "',"
+          + "" + conn.escape(req.body['placeName']) + ","
           + "'" + fileName + "',"
-          + "'" + conn.escape(req.body['placeDescription']) + "',"
+          + "" + conn.escape(req.body['placeDescription']) + ","
           + "''" + ","
           + "0" + ")";
 
