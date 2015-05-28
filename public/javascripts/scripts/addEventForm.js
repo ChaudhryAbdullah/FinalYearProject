@@ -1,7 +1,7 @@
 define(["require", "jquery", "knockout", "pubsub", "moment"], function (require, $, ko, pubsub, moment) {
   function AddEventFormModel() {
     var _this = this,
-      alphaNumericUnderScoreDash = /^[a-zA-Z0-9-_ ]+$/,
+      alphaNumericUnderScoreDash = /^[a-zA-Z0-9-_ ?.]+$/,
       maxNameLength = 100;
 
     _this.name = ko.observable("");

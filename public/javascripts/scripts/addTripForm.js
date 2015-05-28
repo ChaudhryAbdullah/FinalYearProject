@@ -1,7 +1,7 @@
 define(["require", "jquery", "knockout", "pubsub", "underscore"], function (require, $, ko, pubsub, _) {
   function AddTripFormModel() {
     var _this = this,
-      alphaNumericUnderScoreDash = /^[a-zA-Z0-9-_ ]+$/,
+      alphaNumericUnderScoreDash = /^[a-zA-Z0-9-_ ?.]+$/,
       maxNameLength = 100;
 
     _this.name = ko.observable("");
